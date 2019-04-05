@@ -1,0 +1,10 @@
+syntax: glob
+.vscode/ipch/
+build/
+env/
+hello.egg-info/
+lib/
+other_src/world.dll
+other_src/world.obj
+__pycache__/
+.vscode/settings.json
