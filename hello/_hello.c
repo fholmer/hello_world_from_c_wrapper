@@ -19,11 +19,11 @@ static PyObject* _hello(PyObject *self, PyObject *args) {
 
 static PyMethodDef hello_methods[] = { 
     {   
-        "hello_world", hello_world, METH_NOARGS,
+        "hello_world", _hello_world, METH_NOARGS,
         "Print 'hello world' from a method defined in a C extension."
     },  
     {   
-        "hello", hello, METH_VARARGS,
+        "hello", _hello, METH_VARARGS,
         "Print 'hello xxx' from a method defined in a C extension."
     },  
     {NULL, NULL, 0, NULL}

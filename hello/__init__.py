@@ -1,3 +1,4 @@
+from . import _libworld
 from . import _hello
 
 hello = _hello.hello

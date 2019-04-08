@@ -11,3 +11,4 @@ __pycache__/
 dist/
 other_src/world.exp
 other_src/world.lib
+other_src/libworld.so
