@@ -1,4 +1,4 @@
-#include "world.h"
+#include "../include/world.h"
 
 void hello_world() {
     printf("Hello, world!\n");

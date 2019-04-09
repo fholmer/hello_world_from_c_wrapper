@@ -4,11 +4,7 @@ build/
 env/
 hello.egg-info/
 lib/
-other_src/world.dll
-other_src/world.obj
 __pycache__/
 .vscode/settings.json
 dist/
-other_src/world.exp
-other_src/world.lib
-other_src/libworld.so
+lib_world/bin/
