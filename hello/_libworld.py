@@ -4,7 +4,8 @@ import os
 #world_shared_object = pkg_resources.resource_filename(__name__, 'libworld.so')
 
 pkg_dir = os.path.dirname(__file__)
-lib_file = os.path.join(pkg_dir, 'libworld.so')
-print(lib_file)
-ctypes.cdll.LoadLibrary(lib_file)
-
+for libfile in ['world.dll', 'libworld.so']:
+    lib_path = os.path.join(pkg_dir, 'lib', libfile)
+    print(libfile, lib_path, os.path.isfile(lib_path))
+    if os.path.isfile(lib_path):
+        ctypes.cdll.LoadLibrary(lib_path)
