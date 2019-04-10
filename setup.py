@@ -4,21 +4,32 @@
 import os
 from setuptools import setup, find_packages, Extension
 
-# i windows så vil denne extension-modulen lete etter world.dll i sin egen mappe.
-# slik er det ikke i linux, men vi kan få det til ved å sette koden $ORIGIN i RUNPATH:
-rpath = ['$ORIGIN'] if os.name == 'posix' else []
+# Svar på hvorfor variablene må være forskjellig basert på platform:
 
-# .dll-biblioteker og .so biblioteker har forskjellig navnestandard:
-library_file = 'libworld.so' if os.name == 'posix' else 'world.dll'
+#   rpath:
+#     i windows så vil denne extension-modulen lete etter world.dll i sin egen mappe.
+#     slik er det ikke i linux, men vi kan få det til ved å sette koden $ORIGIN i RUNPATH
 
-# og forskjellig plassering
-library_dir = os.path.join('lib_world', 'bin', 'linux' if os.name == 'posix' else 'win')
+#   library_file:
+#     .dll-biblioteker (windows) og .so biblioteker (linux) har forskjellig navnestandard
+
+#   library_dir:
+#     ... og forskjellig plassering bas
+
+if os.name == 'posix':
+      rpath = ['$ORIGIN']
+      library_file = 'libworld.so'
+      library_dir = os.path.join('lib_world', 'bin', 'linux')
+else:
+      rpath = []
+      library_file = 'world.dll'
+      library_dir = os.path.join('lib_world', 'bin', 'win')
 
 # og vi må legge ved .dll eller .so filene som data i setupfilen.
 # den må installeres i samme mappe som vår extension
 data_files = os.path.join(library_dir, library_file)
 
-#header filer
+#header filer er like på alle platformer
 include_dir = os.path.join('lib_world', 'include')
 
 hello_ext_module = Extension(
