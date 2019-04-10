@@ -3,6 +3,8 @@ extern "C" {
 #endif
 
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #ifdef _WIN32
 #  define EXPORT __declspec( dllexport )
@@ -10,8 +12,8 @@ extern "C" {
 #  define EXPORT
 #endif
 
-EXPORT void hello_world(void);
-EXPORT void hello(const char* name);
+EXPORT const char* hello_world(void);
+EXPORT const char* hello(const char* name);
 
 #ifdef __cplusplus
 }

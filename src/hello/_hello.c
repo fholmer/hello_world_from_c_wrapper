@@ -4,7 +4,7 @@
 
 // Module method definitions
 static PyObject* _hello_world(PyObject *self, PyObject *args) {
-    hello_world();
+    PySys_FormatStdout("%s", hello_world());
     Py_RETURN_NONE;
 }
 
@@ -13,7 +13,7 @@ static PyObject* _hello(PyObject *self, PyObject *args) {
     if (!PyArg_ParseTuple(args, "s", &name)) {
         return NULL;
     }
-    hello(name);
+    PySys_FormatStdout("%s", hello(name));
     Py_RETURN_NONE;
 }
 
