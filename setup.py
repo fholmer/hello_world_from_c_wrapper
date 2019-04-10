@@ -33,8 +33,8 @@ data_files = os.path.join(library_dir, library_file)
 include_dir = os.path.join('lib_world', 'include')
 
 hello_ext_module = Extension(
-      'hello._hello',
-      sources=['hello/_hello.c'],
+      'hello.world._hello',
+      sources=['src/hello/_hello.c'],
       include_dirs=[include_dir],
       library_dirs=[library_dir],
       libraries=['world'],
@@ -44,8 +44,9 @@ hello_ext_module = Extension(
 setup(name='hello',
       version='0.1.0',
       description='Hello world module written in C',
-      packages=find_packages(include=['hello']),
-      data_files=[('hello', [data_files])],
+      packages=['hello', 'hello.world'],
+      package_dir={'hello':'src/hello', 'hello.world':library_dir},
+      package_data={'hello.world':[library_file]},
       ext_modules=[hello_ext_module])
 
 # kommentar til hello/hello.c:

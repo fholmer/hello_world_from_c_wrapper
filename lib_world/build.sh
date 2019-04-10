@@ -1,4 +1,5 @@
-#ps: husk å lage mappen bin/linux hvis den ikke finnes
+#husk å lage mappen bin/linux hvis den ikke finnes
+mkdir -p bin/linux
 
 #slett fil hvis den finnes
 test -e bin/linux/libworld.so && rm bin/linux/libworld.so
