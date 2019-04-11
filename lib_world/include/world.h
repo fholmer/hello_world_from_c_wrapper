@@ -14,6 +14,7 @@ extern "C" {
 
 EXPORT const char* hello_world(void);
 EXPORT const char* hello(const char* name);
+EXPORT const char* get_version_info(void);
 
 #ifdef __cplusplus
 }

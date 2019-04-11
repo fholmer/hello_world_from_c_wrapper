@@ -10,3 +10,6 @@ const char* hello(const char* name) {
     return reply;
 }
 
+const char* get_version_info() {
+    return "1.0.0-RC1";
+}

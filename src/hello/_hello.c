@@ -17,14 +17,22 @@ static PyObject* _hello(PyObject *self, PyObject *args) {
     Py_RETURN_NONE;
 }
 
+static PyObject* _get_version_info(PyObject *self, PyObject *args) {
+    return PyUnicode_FromString(get_version_info());
+}
+
 static PyMethodDef hello_methods[] = { 
     {   
         "hello_world", _hello_world, METH_NOARGS,
-        "Print 'hello world' from a method defined in a C extension."
+        "Print Hello, World!"
     },  
     {   
         "hello", _hello, METH_VARARGS,
-        "Print 'hello xxx' from a method defined in a C extension."
+        "Print Hello, name!"
+    },  
+    {   
+        "get_version_info", _get_version_info, METH_NOARGS,
+        "Get library version"
     },  
     {NULL, NULL, 0, NULL}
 };
@@ -32,7 +40,7 @@ static PyMethodDef hello_methods[] = {
 static struct PyModuleDef hello_definition = { 
     PyModuleDef_HEAD_INIT,
     "hello",
-    "A Python module that prints 'hello world' from C code.",
+    "A Hello world Python module.",
     -1, 
     hello_methods
 };
