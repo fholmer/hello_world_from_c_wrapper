@@ -1,8 +1,8 @@
-#husk å lage mappen bin/linux hvis den ikke finnes
+# create folder if not exist
 mkdir -p bin/linux
 
-#slett fil hvis den finnes
+# remove previous build
 test -e bin/linux/libworld.so && rm bin/linux/libworld.so
 
-#kompiler fil
+# build
 gcc -shared -o bin/linux/libworld.so -fPIC src/world.c

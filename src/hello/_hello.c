@@ -45,6 +45,8 @@ static struct PyModuleDef hello_definition = {
     hello_methods
 };
 
+// the module must be called PyMODINIT_FUNC PyInit__hello (void)
+// if you want the name to be _hello. (underscore after PyInit_)
 PyMODINIT_FUNC PyInit__hello(void) {
     Py_Initialize();
     return PyModule_Create(&hello_definition);
