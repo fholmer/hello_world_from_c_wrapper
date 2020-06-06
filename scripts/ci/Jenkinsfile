@@ -1,0 +1,74 @@
+pipeline {
+    agent none
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+        stage("Checkout") {
+            agent any
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build libworld linux') {
+            agent {
+                docker {
+                    image 'python:3.8-buster'
+                }
+            }
+            steps {
+                sh """
+                    mkdir -p lib_world/bin/linux
+                    test -e lib_world/bin/linux/libworld.so && rm lib_world/bin/linux/libworld.so
+                    gcc -shared -o lib_world/bin/linux/libworld.so -fPIC lib_world/src/world.c
+                   """
+                stash(name: 'compiled-libworld', includes: 'lib_world/bin/linux/libworld.so')
+            }
+        }
+        stage('Build helloworld linux') {
+            agent {
+                docker {
+                    image 'python:3.8-buster'
+                }
+            }
+            steps {
+                unstash(name: 'compiled-libworld') 
+                sh "python setup.py bdist_wheel"
+                stash(name: 'compiled-results', includes: 'dist/*')
+            }
+        }
+        stage('Test helloworld linux') {
+            agent {
+                docker {
+                    image 'python:3.8-slim-buster'
+                }
+            }
+            steps {
+                unstash(name: 'compiled-results')
+                sh """
+                    pip install pytest dist/*.whl
+                    pytest --junit-xml test-reports/results.xml tests
+                   """
+                stash(name: 'compiled-results', includes: 'dist/*')
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
+        }
+        stage('Deliver') {
+            agent any
+            steps {
+                dir(path: env.BUILD_ID) { 
+                    unstash(name: 'compiled-results') 
+                }
+            }
+            post {
+                success {
+                    archiveArtifacts "${env.BUILD_ID}/**"
+                }
+            }
+        }
+    }
+}
